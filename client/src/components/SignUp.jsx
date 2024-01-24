@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [user, setUser] = useState({
     email: "",
-    name:"",
+    name: "",
     password: "",
   });
+  const [avatar, setAvatar] = useState(null);
   const [visible, setVisible] = useState(false);
+
+  const handleFileUpload = (e) => {
+    // console.log("some")
+    const file = e.target.files[0];
+    setAvatar(file);
+  };
   return (
     <div className="h-screen flex w-full bg-gray-lightd justify-center items-center bg-gray-dark sm:px-2">
       <div
-        className="loginMain bg-white border-[1px] rounded-2xl sm:basis-full md:basis-[60%] lg:basis-[35%]  
-    flex flex-col justify-between gap-14 items-stretch shadow-2xl "
+        className="loginMain bg-white border-[1px] rounded-2xl sm:basis-full md:basis-[60%] lg:basis-[33%]  
+    flex flex-col justify-between gap-10 items-stretch shadow-2xl "
       >
         <div className="title-container flex flex-col items-center justify-center pt-8">
           <div className="title">
@@ -55,7 +63,7 @@ const SignUp = () => {
             <label htmlFor="password">Password</label>
             <div className="relative flex w-full ">
               <input
-                type={visible ? 'text':"password"}
+                type={visible ? "text" : "password"}
                 className="h-10 rounded-md border-[1px] pl-2 w-full shadow-md"
                 value={user.password}
                 onChange={(e) => {
@@ -75,10 +83,45 @@ const SignUp = () => {
               )}
             </div>
           </div>
-        
+        </div>
+        <div className="fileUploadContainer flex w-full items-stretch justify-center">
+          <label
+            htmlFor="avatar"
+            className="book block text-sm  font-medium text-gray"
+          ></label>
+          <div className="mt-2 flex items-center">
+            <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
+              {avatar ? (
+                <img
+                  src={URL.createObjectURL(avatar)}
+                  alt="avatar"
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                <RxAvatar className="h-8 w-8" />
+              )}
+            </span>
+            <span className="flex">
+              <label
+                htmlFor="file-input"
+                className="ml-5 flex items-center justify-center px-4 py-2 border-gray-light 
+              text-gray-dark bg-gray-light hover:bg-gray "
+              >
+              <span>Upload Photo</span>
+                  <input
+                    type="file"
+                    name="avatar"
+                    id="file-input"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={handleFileUpload}
+                    className="sr-only"
+                  />
+              </label>
+            </span>
+          </div>
         </div>
         <div className="btn-signUpContainer flex flex-col items-center justify-center gap-5 pb-2">
-          <button className="px-5 py-2 border-2 border-purple ring-1 ring-red hover:border-violet rounded-3xl bg-purple hover:shadow-darkblue shadow-lg duration-100 text-gray-light">
+          <button className="px-5 py-2 border-2 border-purple ring-1 ring-darkblue hover:border-violet rounded-3xl bg-violet hover:bg-darkblue hover:shadow-darkblue shadow-md duration-100 text-gray-light">
             Submit
           </button>
           <div className="signup-container">
